@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const toggleMenu = useSelector((store) => store.app.isMenuOpen);
+
+  if (!toggleMenu) return null;
   return (
     <div className="w-40 shadow-lg">
       <ul className="px-3">
