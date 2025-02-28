@@ -5,6 +5,8 @@ import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,6 +51,7 @@ const Head = () => {
     let data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     let json = await data.json();
     console.log(json[1]);
+    setSuggestions(json[1]);
   };
 
   const handleToggleMenu = () => {
@@ -71,18 +74,34 @@ const Head = () => {
       </div>
 
       <div className="col-span-10 items-center ">
-        <input
-          className=" bg-gray-100 rounded-l-full w-1/2  border border-black focus:outline-none px-6 py-2"
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-          }}
-        />
-        <button className=" border border-black col-span-1 bg-gray-100  px-6 rounded-r-3xl py-2 text-md ">
-          Search
-        </button>
+        <div>
+          <input
+            className=" bg-gray-100 rounded-l-full w-1/2  border border-black focus:outline-none px-6 py-2"
+            type="text"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setShowSuggestions(false)}
+          />
+
+          <button className=" border border-black col-span-1 bg-gray-100  px-6 rounded-r-3xl py-2 text-md ">
+            Search
+          </button>
+        </div>
+        {showSuggestions && (
+          <div className="fixed bg-white w-[44rem] rounded-lg px-4 py-3 shadow-lg mx-2 border border-gray-100">
+            <ul>
+              {suggestions.map((s) => (
+                <li key={s} className="hover:bg-gray-100 py-1">
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="col-span-1 ">
