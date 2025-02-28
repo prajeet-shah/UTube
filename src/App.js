@@ -3,31 +3,36 @@ import Body from "./components/Body";
 import Head from "./components/Head";
 import store from "./utils/store";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
+import WatchVideo from "./components/WatchVideo";
+import MainContainer from "./components/MainContainer";
 
 function App() {
-  const AppLayout = () => {
-    return (
-      <div className="App">
-        <Provider store={store}>
-          <Head />
-          <Outlet />
-        </Provider>
-      </div>
-    );
-  };
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <Body />,
+      children: [
+        {
+          path: "/",
+          element: <MainContainer />,
+        },
 
-  const appRouter = createBrowserRouter([{
-    path: "/",
-    element: <AppLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Body />,
-      },
-    ],
-  }]);
+        {
+          path: "/watch",
+          element: <WatchVideo />,
+        },
+      ],
+    },
+  ]);
 
-  return <RouterProvider router={appRouter}></RouterProvider>;
+  return (
+    <div>
+      <Provider store={store}>
+        <Head />
+        <RouterProvider router={appRouter}></RouterProvider>;
+      </Provider>
+    </div>
+  );
 }
 
 export default App;
