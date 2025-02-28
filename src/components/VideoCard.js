@@ -1,7 +1,7 @@
 import React from "react";
 
 const VideoCard = ({ info }) => {
-  console.log(info);
+  // console.log(info);
 
   if (!info) return;
 
@@ -11,7 +11,11 @@ const VideoCard = ({ info }) => {
   return (
     <div>
       <div className="m-2 shadow-lg w-72 rounded-lg">
-        <img className="rounded-lg" src={thumbnails.medium.url} alt="thumbnails" />
+        <img
+          className="rounded-lg"
+          src={thumbnails.medium.url}
+          alt="thumbnails"
+        />
         <ul>
           <li className="truncate">{title}</li>
           <li>{channelTitle}</li>
