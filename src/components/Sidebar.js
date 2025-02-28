@@ -6,7 +6,7 @@ const Sidebar = () => {
 
   if (!toggleMenu) return null;
   return (
-    <div className="w-40 shadow-lg">
+    <div className="w-52 shadow-lg">
       <ul className="px-3">
         <li>Home</li>
         <li>Shorts</li>
