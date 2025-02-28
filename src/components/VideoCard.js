@@ -17,9 +17,9 @@ const VideoCard = ({ info }) => {
           alt="thumbnails"
         />
         <ul>
-          <li className="truncate">{title}</li>
+          <li className="truncate font-bold">{title}</li>
           <li>{channelTitle}</li>
-          <li> {viewCount}Views</li>
+          <li> {viewCount} Views</li>
         </ul>
       </div>
     </div>
