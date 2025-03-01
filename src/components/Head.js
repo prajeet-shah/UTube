@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
-import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import {
+  HAMBURGER_ICON,
+  USER_ICON,
+  YOUTUBE_LOGO,
+  YOUTUBE_SEARCH_API,
+} from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
+import { Link } from "react-router";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,15 +76,13 @@ const Head = () => {
       <div className="flex col-span-1">
         <img
           className="h-8 mx-2 cursor-pointer"
-          src="https://icons.veryicon.com/png/o/miscellaneous/linear-icon-45/hamburger-menu-4.png"
+          src={HAMBURGER_ICON}
           alt="hamburger"
           onClick={handleToggleMenu}
         />
-        <img
-          className="h-8"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1024px-YouTube_Logo_2017.svg.png"
-          alt="youtube-logo"
-        />
+        <div>
+          <img className="h-8" src={YOUTUBE_LOGO} alt="youtube-logo" />
+        </div>
       </div>
 
       <div className="col-span-10 items-center ">
@@ -113,11 +117,7 @@ const Head = () => {
       </div>
 
       <div className="col-span-1 ">
-        <img
-          className="h-8"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRs_rWILOMx5-v3aXwJu7LWUhnPceiKvvDg&s"
-          alt="user-icon"
-        />
+        <img className="h-8" src={USER_ICON} alt="user-icon" />
       </div>
     </div>
   );

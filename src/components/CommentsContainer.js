@@ -1,4 +1,5 @@
 import React from "react";
+import { USER_ICON } from "../utils/constants";
 
 const commentData = [
   {
@@ -94,11 +95,7 @@ const Comment = ({ data }) => {
   const { name, comment, replies } = data;
   return (
     <div className="flex my-2">
-      <img
-        className="w-12 h-12 mx-1"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRs_rWILOMx5-v3aXwJu7LWUhnPceiKvvDg&s"
-        alt="user-icon"
-      />
+      <img className="w-12 h-12 mx-1" src={USER_ICON} alt="user-icon" />
       <div className="px-3 bg-gray-100 w-full shadow-sm rounded-lg">
         <p className="font-bold">{name}</p>
         <p>{comment}</p>
