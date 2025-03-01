@@ -6,7 +6,7 @@ const ChatMessage = ({name, message}) => {
     <div className='flex'>
         <img className='w-8 h-8' src={USER_ICON} alt='user-logo'/>
         <p className='mx-1 font-bold py-1'>{name}</p>
-        <p className='py-1'>{message}</p>
+        <p className='py-1 truncate'>{message}</p>
     </div>
   )
 }
