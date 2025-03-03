@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMenu } from "../utils/appSlice";
+import { SearchByName, toggleMenu } from "../utils/appSlice";
 import {
   HAMBURGER_ICON,
   USER_ICON,
@@ -8,12 +8,14 @@ import {
   YOUTUBE_SEARCH_API,
 } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
+import { useNavigate } from "react-router";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const searchCache = useSelector((store) => store.search);
 
@@ -60,7 +62,7 @@ const Head = () => {
 
   const getSearchSuggestions = async () => {
     try {
-      console.log("API Call - " + searchQuery);
+      // console.log("API Call - " + searchQuery);
       let data = await fetch(
         `https://api.allorigins.win/get?url=${encodeURIComponent(
           "https://suggestqueries.google.com/complete/search?client=firefox&q=" +
@@ -71,7 +73,7 @@ const Head = () => {
         throw new Error("Network response was not ok");
       }
       let json = await data.json();
-      console.log(json);
+      // console.log(json);
       setSuggestions(json.contents ? JSON.parse(json.contents)[1] : []);
       dispatch(
         cacheResults({
@@ -86,6 +88,11 @@ const Head = () => {
   const handleToggleMenu = () => {
     dispatch(toggleMenu());
   };
+
+  const handleSearch = () => {
+    navigate(`/results?search_query=${searchQuery}`); // Navigate to searchResults page with query parameter
+  };
+
   return (
     <div className="grid grid-flow-col p-5 my-4 shadow-lg ">
       <div className="flex col-span-1">
@@ -114,7 +121,10 @@ const Head = () => {
             onBlur={() => setShowSuggestions(false)}
           />
 
-          <button className=" border border-black col-span-1 bg-gray-100  px-6 rounded-r-3xl py-2 text-md ">
+          <button
+            className=" border border-black col-span-1 bg-gray-100  px-6 rounded-r-3xl py-2 text-md "
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
@@ -127,6 +137,7 @@ const Head = () => {
                   className="hover:bg-gray-100 py-1"
                   onMouseEnter={() => {
                     setSearchQuery(s);
+                    dispatch(SearchByName(s));
                   }}
                 >
                   {s}
