@@ -12,7 +12,7 @@ const WatchVideo = () => {
   }, []);
 
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get("v"));
+  // console.log(searchParams.get("v"));
 
   return (
     <div className="p-5 w-full">

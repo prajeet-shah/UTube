@@ -59,21 +59,28 @@ const Head = () => {
    */
 
   const getSearchSuggestions = async () => {
-    console.log("API Call - " + searchQuery);
-    let data = await fetch(
-      `https://api.allorigins.win/get?url=${encodeURIComponent(
-        "https://suggestqueries.google.com/complete/search?client=firefox&q=" +
-          searchQuery
-      )}`
-    );
-    let json = await data.json();
-    console.log(json);
-    setSuggestions(json.contents ? JSON.parse(json.contents)[1] : []);
-    dispatch(
-      cacheResults({
-        [searchQuery]: [json.contents ? JSON.parse(json.contents)[1] : []],
-      })
-    );
+    try {
+      console.log("API Call - " + searchQuery);
+      let data = await fetch(
+        `https://api.allorigins.win/get?url=${encodeURIComponent(
+          "https://suggestqueries.google.com/complete/search?client=firefox&q=" +
+            searchQuery
+        )}`
+      );
+      if (!data.ok) {
+        throw new Error("Network response was not ok");
+      }
+      let json = await data.json();
+      console.log(json);
+      setSuggestions(json.contents ? JSON.parse(json.contents)[1] : []);
+      dispatch(
+        cacheResults({
+          [searchQuery]: [json.contents ? JSON.parse(json.contents)[1] : []],
+        })
+      );
+    } catch (error) {
+      console.error("Failed to fetch search suggestions:", error);
+    }
   };
 
   const handleToggleMenu = () => {
@@ -93,7 +100,7 @@ const Head = () => {
         </div>
       </div>
 
-      <div className="col-span-10 items-center ">
+      <div className="col-span-10 items-center relative">
         <div>
           <input
             className=" bg-gray-100 rounded-l-full w-1/2  border border-black focus:outline-none px-6 py-2"
@@ -111,11 +118,17 @@ const Head = () => {
             Search
           </button>
         </div>
-        {showSuggestions && (
-          <div className="fixed bg-white w-[44rem] rounded-lg px-4 py-3 shadow-lg mx-2 border border-gray-100">
+        {showSuggestions && suggestions.length > 0 && (
+          <div className="absolute  bg-white w-[44rem] rounded-lg px-4 py-3 shadow-lg mx-2 border border-gray-100">
             <ul>
               {suggestions.map((s, index) => (
-                <li key={index} className="hover:bg-gray-100 py-1">
+                <li
+                  key={index}
+                  className="hover:bg-gray-100 py-1"
+                  onMouseEnter={() => {
+                    setSearchQuery(s);
+                  }}
+                >
                   {s}
                 </li>
               ))}
