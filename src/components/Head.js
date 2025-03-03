@@ -8,7 +8,6 @@ import {
   YOUTUBE_SEARCH_API,
 } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
-import { Link } from "react-router";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,11 +60,20 @@ const Head = () => {
 
   const getSearchSuggestions = async () => {
     console.log("API Call - " + searchQuery);
-    let data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    let data = await fetch(
+      `https://api.allorigins.win/get?url=${encodeURIComponent(
+        "https://suggestqueries.google.com/complete/search?client=firefox&q=" +
+          searchQuery
+      )}`
+    );
     let json = await data.json();
-    console.log(json[1]);
-    setSuggestions(json[1]);
-    dispatch(cacheResults({ [searchQuery]: [json[1]] }));
+    console.log(json);
+    setSuggestions(json.contents ? JSON.parse(json.contents)[1] : []);
+    dispatch(
+      cacheResults({
+        [searchQuery]: [json.contents ? JSON.parse(json.contents)[1] : []],
+      })
+    );
   };
 
   const handleToggleMenu = () => {
@@ -106,8 +114,8 @@ const Head = () => {
         {showSuggestions && (
           <div className="fixed bg-white w-[44rem] rounded-lg px-4 py-3 shadow-lg mx-2 border border-gray-100">
             <ul>
-              {suggestions.map((s) => (
-                <li key={s} className="hover:bg-gray-100 py-1">
+              {suggestions.map((s, index) => (
+                <li key={index} className="hover:bg-gray-100 py-1">
                   {s}
                 </li>
               ))}
