@@ -16,6 +16,8 @@ const VideoContainer = () => {
     setVideoData(json.items);
   };
 
+  if (!videoData) return;
+
   return (
     <div className="flex flex-wrap justify-center mt-2">
       {videoData.map((video) => (

@@ -9,6 +9,7 @@ import {
 } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
 import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -103,7 +104,9 @@ const Head = () => {
           onClick={handleToggleMenu}
         />
         <div>
-          <img className="h-8" src={YOUTUBE_LOGO} alt="youtube-logo" />
+          <Link to="/">
+            <img className="h-8" src={YOUTUBE_LOGO} alt="youtube-logo" />
+          </Link>
         </div>
       </div>
 
