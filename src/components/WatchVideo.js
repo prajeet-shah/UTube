@@ -35,7 +35,7 @@ const WatchVideo = () => {
       </div>
 
       <div className="w-3/4">
-        <CommentsContainer />
+        <CommentsContainer videoId={searchParams.get("v")} />
       </div>
     </div>
   );

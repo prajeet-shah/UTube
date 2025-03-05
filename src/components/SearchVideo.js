@@ -1,7 +1,7 @@
 import React from "react";
 
 const SearchVideo = ({ info }) => {
-  console.log(info.snippet.thumbnails.medium.url);
+  // console.log(info.snippet.thumbnails.medium.url);
 
   return (
     <div className="flex items-center shadow-sm bg-gray-100 rounded-lg py-2 my-4">

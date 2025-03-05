@@ -5,7 +5,7 @@ import SearchResultsVideoContainer from "./SearchResultsVideoContainer";
 const SearchResult = () => {
   const [videoItems, setVideoItems] = useState([]);
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get("search_query"));
+  // console.log(searchParams.get("search_query"));
 
   const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY; // Replace with your YouTube API Key
   const BASE_URL = "https://youtube.googleapis.com/youtube/v3/search";
@@ -21,7 +21,7 @@ const SearchResult = () => {
     );
     let json = await data.json();
     setVideoItems(json.items);
-    console.log(json.items);
+    // console.log(json.items);
   };
   return (
     <div>

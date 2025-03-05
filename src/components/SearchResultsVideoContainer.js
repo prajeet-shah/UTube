@@ -3,7 +3,7 @@ import SearchVideo from "./SearchVideo";
 import { Link } from "react-router";
 
 const SearchResultsVideoContainer = ({ videoItems }) => {
-  console.log(videoItems);
+  // console.log(videoItems);
   if (!videoItems) return;
   return (
     <div>
